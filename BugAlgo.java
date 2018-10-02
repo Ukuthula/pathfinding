@@ -40,7 +40,7 @@ public class BugAlgo {
         if (map.isPassableTerrainAt(unitLocation.add(dirToGoal)) == 0) {
             obstacleDirection.put(unit.id(), dirToGoal);
         }
-        for (int number : new int[]{-1, -2}) {
+        for (int number : new int[]{-1, -2, -3}) {
             Direction newDirection = DirectionIterator.nextDirection(dirToGoal, number);
 
             MapLocation candidateLoc = unitLocation.add(newDirection);
