@@ -37,32 +37,22 @@ public class BugAlgo {
             return dirToGoal;
         }
 
-
-
-        Direction newDirection = bc.bcDirectionRotateLeft(dirToGoal);
-
-        if (map.isPassableTerrainAt(unitLocation.add(newDirection)) == 1) {
-            obstacleDirection.put(unit.id(), Direction.Center);
-
-            if (Player.gc.isOccupiable(unitLocation))
+        if (map.isPassableTerrainAt(unitLocation.add(dirToGoal)) == 0) {
+            obstacleDirection.put(unit.id(), dirToGoal);
         }
+        for (int number : new int[]{-1, -2}) {
+            Direction newDirection = DirectionIterator.nextDirection(dirToGoal, number);
 
-//        if (map.isPassableTerrainAt(unitLocation.add(dirToGoal)) == 0) {
-//            obstacleDirection.put(unit.id(), dirToGoal);
-//        }
-//        for (int number : new int[]{-1, -2}) {
-//            Direction newDirection = DirectionIterator.nextDirection(dirToGoal, number);
-//
-//            MapLocation candidateLoc = unitLocation.add(newDirection);
-//            if (map.isPassableTerrainAt(candidateLoc) == 1 && Player.gc.isOccupiable(candidateLoc) == 1) {
-//                //System.out.println("Direction: " + newDirection.swigValue());
-//                return newDirection;
-//            }
-//
-//            if (map.isPassableTerrainAt(candidateLoc) == 0) {
-//                obstacleDirection.put(unit.id(), newDirection);
-//            }
-//        }
+            MapLocation candidateLoc = unitLocation.add(newDirection);
+            if (map.isPassableTerrainAt(candidateLoc) == 1 && Player.gc.isOccupiable(candidateLoc) == 1) {
+                //System.out.println("Direction: " + newDirection.swigValue());
+                return newDirection;
+            }
+
+            if (map.isPassableTerrainAt(candidateLoc) == 0) {
+                obstacleDirection.put(unit.id(), newDirection);
+            }
+        }
         System.out.println("no direction found!");
         return Direction.Center;
     }
